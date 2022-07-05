@@ -1,0 +1,127 @@
+-- C R E A T I N G   T A B L E S
+
+
+--T A B L E 1
+
+CREATE TABLE employee
+(
+emp_id INT PRIMARY KEY,
+first_name VARCHAR(15),
+last_name VARCHAR(15),
+birth_date DATE,
+sex VARCHAR(1),
+salary INT,
+super_id INT ,
+branch_id INT );
+
+ALTER TABLE EMPLOYEE
+ADD FOREIGN KEY(super_id)
+REFERENCES employee(emp_id);
+
+
+ALTER TABLE employee
+ADD FOREIGN KEY(branch_id)
+REFERENCES branch(branch_id);
+
+
+DESC  employee
+
+
+--T A B L E 2
+
+CREATE TABLE branch 
+(
+branch_id INT PRIMARY KEY,
+branch_name VARCHAR(15),
+mgr_id INT,
+mgr_start_date DATE);
+
+DESC branch
+
+
+--T A B L E 3
+
+CREATE TABLE client
+(
+client_id INT PRIMARY KEY,
+client_name VARCHAR(25),
+branch_id INT,
+FOREIGN KEY(branch_id) REFERENCES branch(branch_id));
+
+DESCRIBE client
+
+--T A B L E 4
+
+CREATE TABLE works_with
+(
+emp_id INT,
+client_id INT,
+total_sales INT,
+PRIMARY KEY(emp_id,client_id),
+FOREIGN KEY(emp_id) REFERENCES employee(emp_id),
+FOREIGN KEY(client_id) REFERENCES client(client_id));
+
+DESC works_with
+
+--T A B L E 5
+
+CREATE TABLE branch_supplier
+(
+branch_id INT,
+supplier_name VARCHAR(30),
+supply_type VARCHAR(30),
+PRIMARY KEY (branch_id,supplier_name),
+FOREIGN KEY (branch_id) REFERENCES branch(branch_id));
+
+
+DESC branch_supplier
+
+
+ALTER session set NLS_DATE_FORMAT='YYYY/MM/DD';
+
+INSERT INTO employee VALUES (100, 'David', 'Wallace', (to_date('1967/11/17','YYYY/MM/DD')), 'M', 250000, Null,Null);
+
+INSERT INTO branch VALUES(1,'Corporate' ,100,(to_date('2006/02/09','YYYY/MM/DD')));
+
+UPDATE employee
+SET branch_id=1
+WHERE emp_id=100;
+
+INSERT INTO employee VALUES (101, 'Jan', 'Levinson', (to_date('1961/05/11','YYYY/MM/DD')), 'F', 110000, 100,1);
+
+INSERT INTO employee VALUES (102, 'Michael', 'Scott', (to_date('1964/03/15','YYYY/MM/DD')), 'M', 75000, 100,Null);
+
+INSERT INTO branch VALUES(2,'Scranton' ,102,(to_date('1992/04/06','YYYY/MM/DD')));
+
+
+UPDATE employee
+SET branch_id=2
+WHERE emp_id=102;
+
+INSERT INTO employee VALUES (103, 'Angela', 'Martin', (to_date('1971/06/25','YYYY/MM/DD')), 'F', 63000, 102,2);
+
+INSERT INTO employee VALUES (104, 'Kelly', 'Kapoor', (to_date('1980/02/05','YYYY/MM/DD')), 'F', 55000, 102,2);
+
+INSERT INTO employee VALUES (105, 'Stanley', 'Hudson', (to_date('1958/02/19','YYYY/MM/DD')), 'M', 69000, 102,2);
+
+
+INSERT INTO employee VALUES (106, 'Josh', 'Porter', (to_date('1969/09/05','YYYY/MM/DD')), 'M', 78000, 100,Null);
+
+INSERT INTO branch VALUES(3,'Stamford' ,106,(to_date('1998/02/13','YYYY/MM/DD')));
+
+UPDATE employee
+SET branch_id=3
+WHERE emp_id=106;
+
+INSERT INTO employee VALUES (107, 'Andy', 'Bernard', (to_date('1973/07/22','YYYY/MM/DD')), 'M', 65000, 106,3);
+
+INSERT INTO employee VALUES (108, 'Jim', 'Halpert', (to_date('1978/10/01','YYYY/MM/DD')), 'M', 71000, 106,3);
+
+
+SELECT *
+FROM employee
+ORDER BY emp_id;
+
+SELECT *
+FROM branch
+ORDER BY branch_id;
