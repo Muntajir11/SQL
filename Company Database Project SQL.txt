@@ -260,3 +260,25 @@ WHERE client_name LIKE '%LLC';
 SELECT *
 FROM branch_supplier
 WHERE supplier_name LIKE '%Labels' OR supplier_name LIKE 'Labels%';
+
+--N E S T E D   Q U E R I E S
+
+Q.15  Find the name of all employees who sold over 30000 to  a single client
+
+SELECT first_name,last_name
+FROM employee
+WHERE emp_id IN (
+
+SELECT emp_id
+FROM works_with
+WHERE total_sales>30000);
+
+Q.16  Find all the clients that are managed by Michael Scotts branch. Michael Scotts ID is 102
+
+SELECT client_name
+FROM client
+WHERE branch_id=(
+SELECT branch_id
+FROM branch
+WHERE mgr_id=102
+);
