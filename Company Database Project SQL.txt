@@ -173,3 +173,90 @@ FROM client;
 
 SELECT *
 FROM employee;
+
+
+--B A S I C   Q U E R I E S
+
+-- Q.1 Find all employees
+
+SELECT *
+FROM employee;
+
+-- Q.2 Find all employee ordered by salary
+
+SELECT *
+FROM EMPLOYEE
+ORDER BY salary;
+
+-- Q.3 Find all employee first ordered by sex then name
+
+SELECT *
+FROM EMPLOYEE
+ORDER BY sex,first_name,last_name;
+
+-- Q.4 Find the first 5 employee in the table
+
+SELECT *
+FROM employee
+WHERE emp_id <=104;
+
+-- Q.5 First and last name of all employees
+
+SELECT first_name AS FirstName, last_name AS LastName
+FROM employee
+ORDER BY first_name;
+
+-- Q.6 Find out all the different genders 
+
+SELECT DISTINCT sex
+FROM employee;
+
+
+-- F U N C T I O N S
+
+
+-- Q.7 Find number of employees
+
+SELECT COUNT(emp_id)
+FROM employee;
+
+-- Q.8 Find the number of female employee born after 1970
+
+SELECT COUNT(sex)
+FROM employee
+WHERE sex='F' AND birth_date>(to_date('1970/01/01','YYYY/MM/DD'));
+
+-- Q.9 Find the average of all empployee's salaries
+
+SELECT AVG(salary)
+FROM employee;
+
+-- Q.10 Find the sum of all employee salaries
+
+SELECT SUM(salary)
+FROM employee;
+
+-- Q.11 How many males & females are there in the company
+
+SELECT COUNT(sex), sex
+FROM employee
+GROUP BY sex;
+
+-- Q.12 Find the total sales of each salesman
+
+SELECT SUM(total_sales), emp_id
+FROM works_with
+GROUP BY emp_id
+ORDER BY emp_id;
+
+-- Q.13 Find any client's who are an LLC
+
+SELECT *
+FROM  client
+WHERE client_name LIKE '%LLC';
+
+-- Q.14 Find any branch suppliers who are in label business
+
+SELECT *
+FROM branch_supplier
+WHERE supplier_name LIKE '%Labels' OR supplier_name LIKE 'Labels%';
